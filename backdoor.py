@@ -1,9 +1,4 @@
-
-
 import socket
-import sys
-import random, string
-from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -35,7 +30,7 @@ def authenticate(conn):
     signature = conn.recv(4096)
     message = conn.recv(4096)
     success = True
-    with open("path/to/key.pem", "rb") as key_file:
+    with open("pubkey.pem", "rb") as key_file:
         pub = serialization.load_pem_pub_key(
             key_file.read(),
             password=None,
@@ -69,4 +64,6 @@ while True:
     if !ok:
         # close connection
         print('Authentication failed.')
+    else:
+        conn.send(b'success')
 
