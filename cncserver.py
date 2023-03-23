@@ -1,9 +1,14 @@
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+<<<<<<< HEAD
 from aiohttp import web
+=======
+from aiohttp
+>>>>>>> 248cf4af84bdfefe9c77c5c312d54975702458aa
 
 import socket
+import sys
 
 INIT_MESSAGE = b'This message will be signed and verified'
 BASE_PORT = 1234
