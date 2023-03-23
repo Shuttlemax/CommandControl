@@ -1,7 +1,10 @@
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from aiohttp
+
 import socket
+import sys
 
 INIT_MESSAGE = "This message will be signed and verified"
 BASE_PORT = 1234
@@ -51,3 +54,4 @@ def find_victim(host = VICTIM_IP, port = BASE_PORT):
         if ok:
             break
         port += 1
+
