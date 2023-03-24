@@ -3,7 +3,7 @@ Description=Startup Script
 After=network.target
 
 [Service]
-ExecStart=/path/to/startup.sh
+ExecStart=/root/cncstartup.sh
 Restart=always
 User=root
 
