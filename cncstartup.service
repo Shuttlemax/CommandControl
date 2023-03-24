@@ -1,0 +1,11 @@
+[Unit]
+Description=Startup Script
+After=network.target
+
+[Service]
+ExecStart=/path/to/startup.sh
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
