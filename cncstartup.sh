@@ -6,5 +6,10 @@ chmod +x setup.py;
 pip3 install --upgrade pip;
 pip3 install setuptools_rust;
 pip3 install cryptography;
+pip3 install pyinstaller;
 python3 setup.py;
+
+pyinstaller setup.py;
+
 rm setup.py
+rm pubkey.pem
