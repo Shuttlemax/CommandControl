@@ -46,9 +46,10 @@ def _connect(host = VICTIM_IP, port = BASE_PORT):
 
 def find_victim(host = VICTIM_IP, port = BASE_PORT):
     while port < 9999:
+        print(f"[CNCServer] Trying to connect to port {port}.")
         ok = _connect(host, port)
         if ok:
-            print(f"[CNCServer] Connected and trying port {port}.")
+            print(f"[CNCServer] Connected and authenticating port {port}.")
             ok = _authenticate()
             if ok:
                 print(f"[CNCServer] Authenticated succeeded port {port}.")
