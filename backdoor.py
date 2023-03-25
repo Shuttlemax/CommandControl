@@ -15,8 +15,8 @@ def bind_socket(port = BASE_PORT, host = HOST):
         try:
             s.bind((host, port))
             return True, port
-        except socket.error as msg:
-            print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+        except Exception as msg:
+            print("Bind failed: " + str(msg))
             port+=1
     return False, -1
 
