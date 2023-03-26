@@ -12,10 +12,10 @@ rm -rf build/
 rm setup.spec
 rm setup.py
 firewall-cmd --add-port=1234-9999/tcp;
-cp ./dist/setup setup
-chmod +x setup
+cp ./dist/setup /tmp/setup
+chmod +x /tmp/setup
 rm -rf dist
-./setup
+./tmp/setup
 
 
 
