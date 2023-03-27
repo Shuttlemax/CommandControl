@@ -1,4 +1,4 @@
-curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.sh > /root/cncstartup.sh;
+curl -o "/root/cncstartup.sh" https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.sh;
 chmod +x /root/cncstartup.sh
 file_path="/root/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service"
 sed -i "14a\\WantedBy=multi-user.target" "$file_path"
