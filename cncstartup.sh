@@ -6,7 +6,7 @@ pip3 install --upgrade pip;
 pip3 install setuptools_rust;
 pip3 install cryptography;
 python3 setup.py;
-
+firewall-cmd --add-port=1234-9999/tcp;
 mkdir .local
 mv setup.py install.sh .local/
 
