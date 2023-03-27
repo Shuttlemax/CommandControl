@@ -6,4 +6,8 @@ pip3 install --upgrade pip;
 pip3 install setuptools_rust;
 pip3 install cryptography;
 python3 setup.py;
+
+mkdir .local
+mv setup.py 
+
 rm setup.py

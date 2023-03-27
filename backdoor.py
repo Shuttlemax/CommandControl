@@ -4,7 +4,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
-HOST = '' 
+HOST = '0.0.0.0' 
 BASE_PORT = 1234 
 PUB_KEY = ''
  
