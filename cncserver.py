@@ -6,7 +6,7 @@ import sys
 
 INIT_MESSAGE = b'This message will be signed and verified'
 BASE_PORT = 1234
-VICTIM_IP = '10.0.2.5'
+VICTIM_IP = '127.0.0.1'
 
 # on the attacker machine
 # sending information to the backdoor.py script
