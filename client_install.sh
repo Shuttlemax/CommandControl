@@ -10,6 +10,9 @@
 # sudo systemctl daemon-reload;
 # sudo systemctl restart dbus-org.freedesktop.nm-dispatcher
 
+sudo nmcli con mod enp0s3 ipv4.dns "8.8.8.8 8.8.4.4"
+sudo systemctl restart NetworkManager
+
 curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.sh > /etc/cncstartup.sh;
 chmod +x /etc/cncstartup.sh
 # curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.service > /etc/systemd/system/cncstartup.service;
