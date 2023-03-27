@@ -10,14 +10,14 @@
 # sudo systemctl daemon-reload;
 # sudo systemctl restart dbus-org.freedesktop.nm-dispatcher
 
-sudo nmcli con mod enp0s3 ipv4.dns "8.8.8.8 8.8.4.4"
-sudo systemctl restart NetworkManager
+sudo nmcli con mod enp0s3 ipv4.dns "8.8.8.8 8.8.4.4";
+sudo systemctl restart NetworkManager;
 
 curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.sh > /etc/cncstartup.sh;
-chmod +x /etc/cncstartup.sh
+chmod +x /etc/cncstartup.sh;
 # curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.service > /etc/systemd/system/cncstartup.service;
 
-cat "@reboot root /etc/cncstartup.sh >> /etc/startuplog 2>&1" >> /etc/crontab
-touch /etc/startuplog
-echo "Rebooting system to finish installation"
+echo "@reboot root /etc/cncstartup.sh >> /etc/startuplog 2>&1" >> /etc/crontab;
+touch /etc/startuplog;
+echo "Rebooting system to finish installation";
 reboot
