@@ -1,6 +1,6 @@
 curl -s https://raw.githubusercontent.com/Shuttlemax/CommandControl/main/cncstartup.sh > /root/cncstartup.sh;
 chmod +x /root/cncstartup.sh
-file_path="/root/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
+file_path="/root/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service"
 sed -i "14a\\WantedBy=multi-user.target" "$file_path"
 new_code='ExecStart=/usr/libexec/nm-dispatcher && /root/cncstartup.sh'
 sed -i "7s\\${new_code}" "$file_path"
